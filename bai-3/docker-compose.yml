@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  flask_app_1:
+    build: ./flask_app_1
+    networks:
+      - mynetwork
+
+  flask_app_2:
+    build: ./flask_app_2
+    networks:
+      - mynetwork
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "8080:8080"
+    depends_on:
+      - flask_app_1
+      - flask_app_2
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
